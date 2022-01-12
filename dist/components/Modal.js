@@ -3,33 +3,39 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.default = Modal;
 
 require("core-js/modules/web.dom-collections.iterator.js");
 
-var _react = require("react");
+var _react = _interopRequireWildcard(require("react"));
 
 require("./styles/Modal.css");
 
+var _jsxRuntime = require("react/jsx-runtime");
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
 function Modal(props) {
-  const [visible, setVisible] = (0, _react.useState)(true);
+  const [toggle, setToggle] = (0, _react.useState)(false);
 
-  const handleUserClick = data => {
-    props.handleResponse(data);
-  };
+  function openModal(e) {
+    e.preventDefault();
+    setToggle(current => !current);
+  }
 
-  return /*#__PURE__*/React.createElement("div", null, visible ? /*#__PURE__*/React.createElement("div", {
-    className: "modal"
-  }, /*#__PURE__*/React.createElement("p", {
-    className: "modalText"
-  }, props.message), /*#__PURE__*/React.createElement("button", {
-    className: "modalButton",
-    onClick: () => {
-      setVisible(false);
-      handleUserClick('click');
-    }
-  }, props.button)) : '');
+  return /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
+    children: toggle ? /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
+      className: "modal-bg",
+      children: /*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
+        className: "modal",
+        children: [props.text, /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
+          className: "modalButton",
+          onClick: openModal,
+          children: "Close"
+        })]
+      })
+    }) : ''
+  });
 }
-
-var _default = Modal;
-exports.default = _default;
