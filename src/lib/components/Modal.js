@@ -3,12 +3,9 @@ import { useState } from 'react'
 import './styles/Modal.css'
 
 export default function Modal(props) {
-    const [toggle, setToggle] = useState(false)
+    const [toggle, setToggle] = useState(true)
 
-    function openModal(e) {
-        e.preventDefault()
-        setToggle(current => !current)
-    }
+    console.log(toggle);
 
     return (
         <div>
@@ -16,7 +13,7 @@ export default function Modal(props) {
             <div className='modal-bg'>
                 <div className='modal'>
                     {props.text}
-                    <div className="modalButton" onClick={openModal}>Close</div>
+                    <div className="modalButton" onClick={() => setToggle(false)}>Close</div>
                 </div> 
             </div>: ''}
         </div>
