@@ -1,70 +1,194 @@
-# Getting Started with Create React App
+# react-modal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Responsive modal dialog component for React.
 
-## Available Scripts
+## Installation
 
-In the project directory, you can run:
+To install, you can use [npm](https://npmjs.org/) or [yarn](https://yarnpkg.com):
 
-### `npm start`
+    $ npm install @tim-jn/react-modal
+    $ yarn add @tim-jn/react-modal
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Exemple
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```jsx
 
-### `npm test`
+import './Form.css'
+import states from '../../data/states'
+import { useState } from 'react'
+import { useGlobalState } from '../../state'
+import { Modal } from '@tim-jn/react-modal/dist'
+import React from 'react'
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+export default function Form() {
+  window.React = React
+  const [employees, setEmployees] = useGlobalState('employee')
 
-### `npm run build`
+  const [addFromData, setAddFormData] = useState({
+    firstname: '',
+    lastname: '',
+    startDate: '',
+    department: '',
+    dateOfBirth: '',
+    street: '',
+    city: '',
+    state: '',
+    zipCode: '',
+  })
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  const handleAddFormChange = (e) => {
+    e.preventDefault()
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    const fieldName = e.target.getAttribute('name')
+    const fieldValue = e.target.value
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    const newFormData = { ...addFromData }
+    newFormData[fieldName] = fieldValue
 
-### `npm run eject`
+    setAddFormData(newFormData)
+  }
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+  const [isValid, setIsValid] = useState(false)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  const handleAddFormSubmit = (e) => {
+    e.preventDefault()
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+    const newEmployee = {
+      firstname: addFromData.firstname,
+      lastname: addFromData.lastname,
+      startDate: addFromData.startDate,
+      department: addFromData.department,
+      dateOfBirth: addFromData.dateOfBirth,
+      street: addFromData.street,
+      city: addFromData.city,
+      state: addFromData.state,
+      zipCode: addFromData.zipCode,
+    }
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    const newEmployees = [...employees, newEmployee]
+    setEmployees(newEmployees)
+    setIsValid(true)
+  }
 
-## Learn More
+  return (
+    <section className="formContent">
+      <h2 className="formTitle">Create Employee</h2>
+      <form className="form" onSubmit={handleAddFormSubmit}>
+        <div className="formUpperPart">
+          <label className="formLabel">
+            First Name
+            <input
+              className="formInput"
+              type="text"
+              name="firstname"
+              onChange={handleAddFormChange}
+              required
+            />
+          </label>
+          <label className="formLabel">
+            Last Name
+            <input
+              className="formInput"
+              type="text"
+              name="lastname"
+              onChange={handleAddFormChange}
+              required
+            />
+          </label>
+          <label className="formLabel">
+            Date of Birth
+            <input
+              className="formInput"
+              type="date"
+              name="dateOfBirth"
+              onChange={handleAddFormChange}
+              required
+            />
+          </label>
+          <label className="formLabel">
+            Start Date
+            <input
+              className="formInput"
+              type="date"
+              name="startDate"
+              onChange={handleAddFormChange}
+              required
+            />
+          </label>
+        </div>
+        <div className="fieldset">
+          <label className="formLabel">
+            Street
+            <input
+              className="formInput"
+              type="text"
+              name="street"
+              onChange={handleAddFormChange}
+              required
+            />
+          </label>
+          <label className="formLabel">
+            City
+            <input
+              className="formInput"
+              type="text"
+              name="city"
+              onChange={handleAddFormChange}
+              required
+            />
+          </label>
+          <label className="formLabel">
+            State
+            <select
+              className="formSelect"
+              name="state"
+              onChange={handleAddFormChange}
+              required
+            >
+              <option value=""></option>
+              {states.map((state, index) => {
+                return (
+                  <option key={index} value={state.abbreviation}>
+                    {state.name}
+                  </option>
+                )
+              })}
+            </select>
+          </label>
+          <label className="formLabel">
+            Zip Code
+            <input
+              className="formInput"
+              type="text"
+              name="zipCode"
+              onChange={handleAddFormChange}
+              required
+            />
+          </label>
+        </div>
+        <label className="formLabel">
+          Department
+          <select
+            className="formSelect"
+            name="department"
+            onChange={handleAddFormChange}
+            required
+          >
+            <option value=""></option>
+            <option value="Sales">Sales</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Engineering">Engineering</option>
+            <option value="Human Resources">Human Resources</option>
+            <option value="Legal">Legal</option>
+          </select>
+        </label>
+        <button type="submit" className="btn-modal">
+          Save
+        </button>
+      </form>
+      {isValid ? <Modal text="Employee Created !" /> : ''}
+    </section>
+  )
+}
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```

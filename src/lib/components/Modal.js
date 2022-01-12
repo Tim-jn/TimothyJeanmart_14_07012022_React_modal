@@ -4,9 +4,6 @@ import './styles/Modal.css'
 
 export default function Modal(props) {
     const [toggle, setToggle] = useState(true)
-
-    console.log(toggle);
-
     return (
         <div>
             {toggle ? 
