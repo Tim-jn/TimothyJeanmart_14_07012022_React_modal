@@ -19,14 +19,23 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 function Modal(props) {
   const [toggle, setToggle] = (0, _react.useState)(true);
+
+  const handleUserClick = () => {
+    props.handleResponse();
+  };
+
   return /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
     children: toggle ? /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
       className: "modal-bg",
       children: /*#__PURE__*/(0, _jsxRuntime.jsxs)("div", {
         className: "modal",
         children: [props.text, /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
+          type: "button",
           className: "modalButton",
-          onClick: () => setToggle(false),
+          onClick: () => {
+            setToggle(false);
+            handleUserClick();
+          },
           children: "Close"
         })]
       })

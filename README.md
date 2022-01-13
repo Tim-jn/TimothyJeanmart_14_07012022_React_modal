@@ -24,6 +24,10 @@ export default function Form() {
   window.React = React
 
   const [isValid, setIsValid] = useState(false)
+  
+  const handleModalResponse = () => {
+    setIsValid(false)
+  }
 
   const handleAddFormSubmit = (e) => {
     e.preventDefault()
@@ -36,7 +40,7 @@ export default function Form() {
       <form className="form" onSubmit={handleAddFormSubmit}>
         (...)
       </form>
-      {isValid ? <Modal text="Employee Created !" /> : ''}
+      {isValid ? <Modal text="Employee Created !" handleResponse={handleModalResponse} /> : ''}
     </section>
   )
 }
