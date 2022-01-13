@@ -19,7 +19,6 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 function Modal(props) {
   const [toggle, setToggle] = (0, _react.useState)(true);
-  console.log(toggle);
   return /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
     children: toggle ? /*#__PURE__*/(0, _jsxRuntime.jsx)("div", {
       className: "modal-bg",
