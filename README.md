@@ -13,7 +13,7 @@ To install, you can use [npm](https://npmjs.org/) or [yarn](https://yarnpkg.com)
 
 ## Exemple
 
- [Live demo](https://wealthhealth.netlify.app/)
+  - [Live demo](https://wealthhealth.netlify.app/)
 
 ```jsx
 
